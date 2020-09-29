@@ -3,8 +3,16 @@ import Button from 'components/Button';
 import Modal from 'components/Modal';
 import { GlobalStyles } from 'styles';
 import styled from 'styled-components';
+import { connect } from 'react-redux'
 
-export default function App() {
+function mapStateToProps({ isModalOpen, doggos }) {
+  // console.log(isModalOpen, doggos)
+  return ({
+    isModalOpen
+  })
+}
+
+function App() {
   const [dogBreeds, setDogBreeds] = useState(null);
   const [chosenBreed, setChosenBreed] = useState(null);
   const [dogImageSource, setDogImageSource] = useState(null);
@@ -96,3 +104,6 @@ const ModalButton = styled(Button)`
   margin: 0;
   margin-top: 8px;
 `;
+
+
+export default connect(mapStateToProps)(App)
