@@ -47,12 +47,18 @@ export function getDogBreeds() {
 
 export function getDogImage(breedName) {
   return dispatch => {
-    return fetchRandomDogImage().then(response => dispatch(imageFetched(response.message)));
+    return fetchRandomDogImage(breedName).then(response => dispatch(imageFetched(response.message)));
   };
 }
 
 export function setChosenDogBreed(breedName) {
   return dispatch => {
-    return breedChosen(breedName);
+    return dispatch(breedChosen(breedName));
+  };
+}
+
+export function resetDogImage() {
+  return dispatch => {
+    return dispatch(imageFetched(''));
   };
 }

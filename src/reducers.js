@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { MODAL_SHOWN, MODAL_HIDDEN, IMAGE_FETCHED, BREED_CHOSEN, BREEDS_FETCHED } from 'actions';
 
-function breedsReducer(state = { breeds: null, chosenBreed: null, imageSource: null }, action) {
+function breedsReducer(state = { breeds: [], chosenBreed: '', imageSource: '' }, action) {
   switch (action.type) {
     case BREEDS_FETCHED:
       return { ...state, breeds: action.breedList };
