@@ -8,7 +8,7 @@ module.exports = {
     sourceType: 'module',
   },
   env: { browser: true, es6: true, jest: true },
-  settings: { react: { version: '16' } },
+  settings: { react: { version: 'detect' } },
   plugins: ['babel'],
   rules: {
     'id-length': ['error', { min: 2, exceptions: ['a', 'b', 'x', 'y', 'i'] }],

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import Button from 'components/Button';
+import Modal from 'components/Modal';
+import { GlobalStyles } from 'styles';
+import styled from 'styled-components';
 
 export default function App() {
   const [dogBreeds, setDogBreeds] = useState(null);
   const [chosenBreed, setChosenBreed] = useState(null);
   const [dogImageSource, setDogImageSource] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function fetchDogBreeds() {
     const myRequest = new Request('https://dog.ceo/api/breeds/list/all', {
@@ -27,55 +32,67 @@ export default function App() {
 
   function handleBreedClick(event) {
     const { name } = event.target;
-    // open modal here
+    setIsModalOpen(true);
 
     setChosenBreed(name);
 
     fetchRandomDogImage(name)
       .then(response => setDogImageSource(response.message))
-      .catch(error => console.log(error));
+      .catch(error => error);
   }
 
   function handleGenerateRandomImage() {
     fetchRandomDogImage(chosenBreed)
       .then(response => setDogImageSource(response.message))
-      .catch(error => console.log(error));
+      .catch(error => error);
   }
 
   function handleModalClose() {
     // close modal here
     setChosenBreed(null);
     setDogImageSource(null);
+    setIsModalOpen(false);
   }
 
   return (
-    <main css="display: flex; flex-direction: column; align-items: center; flex-wrap: wrap; background: papayawhip;">
-      <header>wat</header>
-      <p>info here</p>
-      <div css="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between; flex-wrap: wrap; border: 1px solid red;">
-        {dogBreeds &&
-          dogBreeds.map(breed => (
-            <button type="button" key={breed} name={breed} onClick={handleBreedClick}>
-              {breed}
-            </button>
-          ))}
+    <>
+      <GlobalStyles />
 
+      <main css="display: flex; flex-direction: column; align-items: center; flex-wrap: wrap; position: relative;">
+        <header>
+          <h1>Doggos</h1>
+        </header>
+        <p>Click on breed name to see an example image</p>
+        <div css="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between; flex-wrap: wrap;">
+          {dogBreeds &&
+            dogBreeds.map(breed => (
+              <Button key={breed} name={breed} onClick={handleBreedClick}>
+                {breed}
+              </Button>
+            ))}
+        </div>
 
-      </div>
-      {dogImageSource && (
-        <>
-          {chosenBreed && <div>Chosen breed: {chosenBreed}</div>}
-          <div css="display: flex; flex-direction: column; align-items: center; background: peachpuff;">
-            <img src={dogImageSource} />
-            <button type="button" onClick={handleGenerateRandomImage}>
-              Generate another random {chosenBreed}
-            </button>
+        <Modal isOpen={isModalOpen}>
+          {dogImageSource && (
+            <div css="display: flex; flex-direction: column; align-items: center;">
+              <img
+                alt={chosenBreed}
+                src={dogImageSource}
+                css="width: 300px; height: 300px; object-fit: cover; border-radius: 4px; background-color: f6f6f6;"
+              />
+              <ModalButton onClick={handleGenerateRandomImage}>Generate another random {chosenBreed}</ModalButton>
 
-            <button type="button" onClick={handleModalClose}>
-              Close modal
-            </button>
-          </div>
-        </>)}
-    </main>
+              <ModalButton onClick={handleModalClose}>Close modal</ModalButton>
+            </div>
+          )}
+        </Modal>
+      </main>
+    </>
   );
 }
+
+const ModalButton = styled(Button)`
+  width: 300px;
+  margin: 0;
+  margin-top: 8px;
+`;
