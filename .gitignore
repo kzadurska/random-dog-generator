@@ -1,0 +1,12 @@
+# Dependencies
+/node_modules
+# Bundled files
+/dist
+
+# Tests
+/coverage
+
+# Misc
+npm-debug.log
+.DS_Store
+.vscode
