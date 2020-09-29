@@ -7,8 +7,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    publicPath: '/',
+    filename: 'bundle.js',
   },
   devServer: {
     historyApiFallback: true,
@@ -20,7 +19,6 @@ module.exports = {
   module: {
     rules: [
       { test: /\.(js|jsx)$/, use: 'babel-loader' },
-      { test: /\.(png|jpg|svg|gif)$/, use: 'file-loader' },
     ],
   },
   plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin({ template: './index.html' })],
