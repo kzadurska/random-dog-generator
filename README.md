@@ -1,5 +1,12 @@
 # random-dog-generator
 
+## Task
+ 
+1. Use open dog api https://dog.ceo/dog-api/documentation/
+1. Fetch all dog breeds and display as buttons with breed names
+1. On button click a modal opens. Modal shows random image of chosen breed.
+1. Modal has two buttons: close modal, fetch another random image of chosen breed
+
 ## Development
 
 * `npm ci`
