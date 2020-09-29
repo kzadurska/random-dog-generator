@@ -3,20 +3,38 @@ import Button from 'components/Button';
 import Modal from 'components/Modal';
 import { GlobalStyles } from 'styles';
 import styled from 'styled-components';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { showModal, hideModal } from 'actions';
+
+App.propTypes = {
+  isModalOpen: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  // chosenBreed: PropTypes.string.isRequired,
+  // dogBreeds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // dogImageSource: PropTypes.string.isRequired,
+};
 
 function mapStateToProps({ isModalOpen, doggos }) {
-  // console.log(isModalOpen, doggos)
-  return ({
-    isModalOpen
-  })
+  return {
+    isModalOpen,
+    // dogImageSource: doggos.imageSource,
+    // dogBreeds: doggos.breeds,
+    // chosenBreed: doggos.chosenBreed,
+  };
 }
 
-function App() {
+function App({
+  isModalOpen,
+  dispatch,
+  // dogImageSource,
+  // dogBreeds,
+  // chosenBreed
+}) {
   const [dogBreeds, setDogBreeds] = useState(null);
   const [chosenBreed, setChosenBreed] = useState(null);
   const [dogImageSource, setDogImageSource] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function fetchDogBreeds() {
     const myRequest = new Request('https://dog.ceo/api/breeds/list/all', {
@@ -40,7 +58,7 @@ function App() {
 
   function handleBreedClick(event) {
     const { name } = event.target;
-    setIsModalOpen(true);
+    dispatch(showModal());
 
     setChosenBreed(name);
 
@@ -56,10 +74,10 @@ function App() {
   }
 
   function handleModalClose() {
-    // close modal here
     setChosenBreed(null);
     setDogImageSource(null);
-    setIsModalOpen(false);
+
+    dispatch(hideModal());
   }
 
   return (
@@ -105,5 +123,4 @@ const ModalButton = styled(Button)`
   margin-top: 8px;
 `;
 
-
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(App);
