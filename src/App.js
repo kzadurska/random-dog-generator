@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import Button from 'components/Button';
-import Modal from 'components/Modal';
-import { GlobalStyles } from 'styles';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { GlobalStyles } from 'styles';
 import { showModal, hideModal, getDogBreeds, setChosenDogBreed, getDogImage, resetDogImage } from 'actions';
+import Button, { ModalButton } from 'components/Button';
+import Modal from 'components/Modal';
 
 App.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
@@ -45,9 +44,7 @@ function App({ isModalOpen, dispatch, dogImageSource, dogBreeds, chosenBreed }) 
 
   function handleModalClose() {
     dispatch(resetDogImage());
-
     dispatch(setChosenDogBreed(''));
-
     dispatch(hideModal());
   }
 
@@ -74,7 +71,7 @@ function App({ isModalOpen, dispatch, dogImageSource, dogBreeds, chosenBreed }) 
               <img
                 alt={chosenBreed}
                 src={dogImageSource}
-                css="width: 300px; height: 300px; object-fit: cover; border-radius: 4px; background-color: f6f6f6;"
+                css="width: 300px; height: 300px; object-fit: cover; border-radius: 4px;"
               />
               <ModalButton onClick={handleGenerateRandomImage}>Generate another random {chosenBreed}</ModalButton>
 
@@ -86,11 +83,5 @@ function App({ isModalOpen, dispatch, dogImageSource, dogBreeds, chosenBreed }) 
     </>
   );
 }
-
-const ModalButton = styled(Button)`
-  width: 300px;
-  margin: 0;
-  margin-top: 8px;
-`;
 
 export default connect(mapStateToProps)(App);

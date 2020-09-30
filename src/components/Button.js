@@ -9,4 +9,10 @@ const Button = styled.button.attrs({
   cursor: pointer;
 `;
 
+export const ModalButton = styled(Button)`
+  width: 300px;
+  margin: 0;
+  margin-top: 8px;
+`;
+
 export default Button;
